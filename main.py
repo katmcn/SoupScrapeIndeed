@@ -4,10 +4,9 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse, urlencode
 import pandas as pd
 
-START_URL = 'https://uk.indeed.com/jobs?q=data&l=Brighton+and+Hove%2C+East+Sussex&start=0'
 
 def get_scrapeops_url(START_URL):
-    payload = {'api_key': config.API_KEY, 'url': START_URL}
+    payload = {'api_key': config.API_KEY, 'url': config.START_URL}
     proxy_url = 'https://proxy.scrapeops.io/v1/?' + urlencode(payload)
     return proxy_url
 
@@ -62,12 +61,12 @@ joblist = []
 
 for i in range(0,40,10):
     print(f"Getting page, {i}")
-    c = extract(0,START_URL)
+    c = extract(0, config.START_URL)
     transform(c)
 
 df = pd.DataFrame(joblist)
 print(df.head())
-df.to_csv('indeed_data_jobs.csv')
+#df.to_csv('indeed_data_jobs.csv')
 
 
 
